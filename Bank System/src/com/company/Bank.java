@@ -8,6 +8,7 @@ public class Bank {
     private Account[] accounts;
     private int activeAccount;
 
+
     Scanner scan = new Scanner(System.in);
 
 //Bank class Constructor
@@ -24,14 +25,14 @@ public class Bank {
             accounts[number] = new Account();
             number += 1;
         }else{
-            System.out.println("Error");
+            System.out.println("\u001B[31m Error");
         }
 
     }
 
 //Dialog function for transferring money, checks from which to which account money would be sent
     public void transferMoneyDialog(){
-        System.out.println("Enter Acccount number where to send money: ");
+        System.out.println("\u001B[37mEnter Account number where to send money: ");
         int target = scan.nextInt();
         scan.nextLine();
         System.out.println("Enter amount you want to send: ");
@@ -39,7 +40,7 @@ public class Bank {
         if(target!=accounts[activeAccount].getAccountNum()){
             transferMoney(accounts[activeAccount].getAccountNum(), target, money );
         }else{
-            System.out.println("You cannot send money to yourself");
+            System.out.println("\u001B[31mYou cannot send money to yourself");
         }
 
     }
@@ -69,9 +70,9 @@ public class Bank {
             creditDone = accounts[creditNum].creditAmount(money);
         }
         if(creditDone && debitDone){
-            System.out.println("This amount:" + money + " was transferred from " + source +" to " + target);
+            System.out.println("\u001B[32mThis amount:" + money + " Euro was transferred from " + source +" to " + target);
         }else{
-            System.out.println("Transaction failed");
+            System.out.println("\u001B[31mTransaction failed");
         }
     }
 
@@ -80,7 +81,7 @@ public class Bank {
         int attempts = 1;
         boolean stop =true;
         while(stop==true){
-            System.out.println("Enter your account number: ");
+            System.out.println("\u001B[37mEnter your account number: ");
             int accNumInput = scan.nextInt();
             scan.nextLine();
             System.out.println("Enter your pin: ");
@@ -89,22 +90,22 @@ public class Bank {
                 if (accounts[i].getAccountNum() == accNumInput) {
                     if(!accounts[i].getBlocked()){
                         if (accounts[i].getPin() == pinInput) {
-                            System.out.println("You are logged in");
+                            System.out.println("\u001B[32mYou are logged in");
                             activeAccount=i;
                             attempts = 0;
                             stop=false;
                         }else if (attempts >= 3) {
-                            System.out.println("Your Account is locked, please call on the number +4900084677365 to unlock it");
+                            System.out.println("\u001B[31mYour Account is locked, please call on the number +4900084677365 to unlock it");
                             accounts[activeAccount].setBlocked(true);
                             logOut();
                             stop=false;
                         }else {
                             attempts++;
                             int left = 3 - attempts;
-                            System.out.println("Failed, you entered wrong PIN, You have : " + (left + 1) + " tries more");
+                            System.out.printf("\u001B[31mFailed, you entered wrong PIN, You have : %.2f tries more %n ", (left + 1));
                         }
                     }else{
-                        System.out.println("Your Account is locked, please call on the number +4900084677365 to unlock it");
+                        System.out.println("\u001B[31mYour Account is locked, please call on the number +4900084677365 to unlock it");
                         logOut();
                     }
                 }
@@ -117,25 +118,25 @@ public class Bank {
 
 //Function for putting money on the account balance, calculating balance with new amount of money
     public void putMoney(){
-        System.out.println("How much money would You like to put? Enter amount: ");
+        System.out.println("\u001B[37mHow much money would You like to put? Enter amount: ");
         double inputMoney = scan.nextDouble();
         if(inputMoney>0){
             accounts[activeAccount].setAccountBalance(accounts[activeAccount].getAccountBalance() + inputMoney);
         }else{
-            System.out.println("Something went wrong...");
+            System.out.println("\u001B[31mSomething went wrong...");
         }
-        System.out.println("Your Balance now is: " + accounts[activeAccount].getAccountBalance());
+        System.out.printf("\u001B[32mYour Balance now is: %.2f Euro%n " , accounts[activeAccount].getAccountBalance());
     }
 
 //Function to change a PIN in the active account
     public void changePin(){
-        System.out.println("Which PIN would you like to have? Enter 4 numbers: ");
+        System.out.println("\u001B[37mWhich PIN would you like to have? Enter 4 numbers: ");
         int newPin = scan.nextInt();
         if(String.valueOf(newPin).length()==4){
             accounts[activeAccount].setPin(newPin);
-            System.out.println("Your PIN changed. Now your PIN is: " + accounts[activeAccount].getPin());
+            System.out.println("\u001B[32mYour PIN changed. Now your PIN is: " + accounts[activeAccount].getPin());
         }else{
-            System.out.println("Transaction failed. Your PIN is: " + accounts[activeAccount].getPin());
+            System.out.println("\u001B[31mTransaction failed. Your PIN is: " + accounts[activeAccount].getPin());
         }
 
     }
@@ -143,18 +144,18 @@ public class Bank {
 // Function for logging out, send u back to previous menu
     public void logOut(){
         activeAccount = 0;
-        System.out.println("You are logged out");
+        System.out.println("\u001B[32mYou are logged out");
         makeChoice();
     }
 
 //Check balance function, calling getter method from Account class
     public void checkBalance(){
-        System.out.println("Your Balance is: " + accounts[activeAccount].getAccountBalance());
+        System.out.printf("\u001B[32mYour Balance is: %.2f Euro%n", accounts[activeAccount].getAccountBalance());
     }
 
 //Function which showing first bank menu and taking back your choice as integer
     public int menu(Scanner scan){
-        System.out.println("Bank account menu: ");
+        System.out.println("\u001B[37mBank account menu: ");
         System.out.println("1. Create new account");
         System.out.println("2. Login");
         System.out.println("3. Quit");
@@ -170,7 +171,7 @@ public class Bank {
 
 //Function which showing account bank menu, after you logged in and taking back your choice as integer
     public int accountMenu(Scanner scan){
-        System.out.println("You can do: ");
+        System.out.println("\u001B[37mYou can do: ");
         System.out.println("1. Check Balance");
         System.out.println("2. Transfer money");
         System.out.println("3. Change Pin");
@@ -197,7 +198,7 @@ public class Bank {
                     if(accounts[0]!=null){
                         doLogin();makeSecondChoice();break;
                     }else{
-                        System.out.println("\u001B[35m First You need to create an Account!");break;
+                        System.out.println("\u001B[31m First You need to create an Account!");break;
                 }
                 case 3:System.exit(0);scan.close();
             }
@@ -217,7 +218,7 @@ public class Bank {
                     if(accounts[1]!=null){
                         transferMoneyDialog();break;
                     }else{
-                        System.out.println("You cannot transfer money to nowhere!  There is only 1 Account!");break;}
+                        System.out.println("\u001B[31mYou cannot transfer money to nowhere!  There is only 1 Account!");break;}
                 case 3:changePin();break;
                 case 4:putMoney();break;
                 case 5:logOut();break;

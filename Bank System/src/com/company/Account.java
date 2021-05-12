@@ -42,22 +42,23 @@ public class Account {
 
 //Creating new User Account
     public void createAccount(){
-        System.out.println("We would generate your pin and account number");
+        System.out.println("\u001B[37mWe would generate your pin and account number");
         Random random = new Random();
         accountNum = random.nextInt(9999999-1000000) + 1;
         pin = random.nextInt(9999-1000) + 1;
         accountBalance = 0;
         blocked = false;
-        System.out.println("Your Pin is: "+ pin + ". Balance: " + accountBalance + ". AccountNumber: "+ accountNum);
+        System.out.println("\u001B[32mYour Pin is: "+ pin + ". Balance: " + accountBalance + ". AccountNumber: "+ accountNum);
     }
 
 //Calculating balance after transferring money from the source account
     public boolean debitAmount(double num){
         if(accountBalance>num){
-            this.accountBalance -= num;
+            double FEE = 2;
+            this.accountBalance -=(num + FEE);
             return true;
         }else{
-            System.out.println("Your Balance is too low");
+            System.out.println("\u001B[31mYour Balance is too low");
             return false;
         }
     }
