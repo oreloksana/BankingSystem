@@ -8,10 +8,12 @@ public class Account {
     private double accountBalance;
     private boolean blocked;
 
+    //Creating new User Account Constructor with createAccount() function
     public Account (){
         createAccount();
     }
 
+//Getter and Setter methods
     public int getPin() {
         return pin;
     }
@@ -38,17 +40,18 @@ public class Account {
         this.accountBalance = accountBalance;
     }
 
-
+//Creating new User Account
     public void createAccount(){
         System.out.println("We would generate your pin and account number");
         Random random = new Random();
-        accountNum = random.nextInt(999999999-000000001) + 1;
-        pin = random.nextInt(9999-0001) + 1;
+        accountNum = random.nextInt(9999999-1000000) + 1;
+        pin = random.nextInt(9999-1000) + 1;
         accountBalance = 0;
         blocked = false;
         System.out.println("Your Pin is: "+ pin + ". Balance: " + accountBalance + ". AccountNumber: "+ accountNum);
     }
 
+//Calculating balance after transferring money from the source account
     public boolean debitAmount(double num){
         if(accountBalance>num){
             this.accountBalance -= num;
@@ -59,6 +62,8 @@ public class Account {
         }
     }
 
+
+//Calculating balance after transferring money on the target account
     public boolean creditAmount(double num){
             this.accountBalance += num;
             return true;

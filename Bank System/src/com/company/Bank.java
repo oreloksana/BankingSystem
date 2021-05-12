@@ -10,7 +10,7 @@ public class Bank {
 
     Scanner scan = new Scanner(System.in);
 
-
+//Bank class Constructor
     public Bank(int MAX){
         number = 0;
         max = MAX;
@@ -18,7 +18,7 @@ public class Bank {
         accounts = new Account[MAX];
     }
 
-
+//Adding new account to Array accounts
     public void newAccount(){
         if(number < max){
             accounts[number] = new Account();
@@ -29,6 +29,7 @@ public class Bank {
 
     }
 
+//Dialog function for transferring money, checks from which to which account money would be sent
     public void transferMoneyDialog(){
         System.out.println("Enter Acccount number where to send money: ");
         int target = scan.nextInt();
@@ -43,6 +44,7 @@ public class Bank {
 
     }
 
+//Transferring money function, looking for source account and target account, makes transaction and calling calculating functions from Account class
     public void transferMoney(int source, int target, double money){
         boolean debitDone=false;
         boolean creditDone=false;
@@ -50,7 +52,6 @@ public class Bank {
         boolean debitFound=false;
         int debitNum = 0;
         int creditNum = 0;
-
         for(int i = 0; i < number; i++){
             if(accounts[i].getAccountNum()==source){
                 debitFound =true;
@@ -74,6 +75,7 @@ public class Bank {
         }
     }
 
+//Login function, checking Account number and PIN, by giving wrong PIN would lock the Account
     public void doLogin(){
         int attempts = 1;
         boolean stop =true;
@@ -113,7 +115,7 @@ public class Bank {
 
     }
 
-
+//Function for putting money on the account balance, calculating balance with new amount of money
     public void putMoney(){
         System.out.println("How much money would You like to put? Enter amount: ");
         double inputMoney = scan.nextDouble();
@@ -125,7 +127,7 @@ public class Bank {
         System.out.println("Your Balance now is: " + accounts[activeAccount].getAccountBalance());
     }
 
-
+//Function to change a PIN in the active account
     public void changePin(){
         System.out.println("Which PIN would you like to have? Enter 4 numbers: ");
         int newPin = scan.nextInt();
@@ -138,32 +140,36 @@ public class Bank {
 
     }
 
+// Function for logging out, send u back to previous menu
     public void logOut(){
         activeAccount = 0;
         System.out.println("You are logged out");
         makeChoice();
     }
 
+//Check balance function, calling getter method from Account class
     public void checkBalance(){
         System.out.println("Your Balance is: " + accounts[activeAccount].getAccountBalance());
     }
 
-    public static int menu(Scanner scan){
+//Function which showing first bank menu and taking back your choice as integer
+    public int menu(Scanner scan){
         System.out.println("Bank account menu: ");
         System.out.println("1. Create new account");
         System.out.println("2. Login");
         System.out.println("3. Quit");
-
         int choice;
+
         do {
-            System.out.println("Enter choice: ");
+            System.out.println("Enter choice with number 1-3: ");
             choice = scan.nextInt();
         }while (choice < 1 || choice > 3);
 
         return choice;
     }
 
-    public static int accountMenu(Scanner scan){
+//Function which showing account bank menu, after you logged in and taking back your choice as integer
+    public int accountMenu(Scanner scan){
         System.out.println("You can do: ");
         System.out.println("1. Check Balance");
         System.out.println("2. Transfer money");
@@ -171,15 +177,15 @@ public class Bank {
         System.out.println("4. Put money");
         System.out.println("5. Log out");
         int choice;
-
         do {
-            System.out.println("Enter choice: ");
+            System.out.println("Enter choice with a number 1-5: ");
             choice = scan.nextInt();
+
         }while (choice < 1 || choice > 5);
         return choice;
     }
 
-
+//Function which switching between methods in bank operations class, checking if your account is already exists
     public void makeChoice(){
         int choice;
         do{
@@ -199,6 +205,7 @@ public class Bank {
 
     }
 
+//Function which switching between methods in bank operations class, checking if you are not trying to send money on your own account
     public  void makeSecondChoice(){
         int choice;
         do{
